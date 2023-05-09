@@ -16,14 +16,18 @@ public class Merged2linkedList {
         n1.next = n2;
         n2.next = n3;
         n3.next = n4;
+
+        ListNode reversed = n2.reverse(n1);
+        ListNode.printNode(reversed);
+
         n5.next = n6;
         n6.next = n7;
 
      /*   ListNode listNode = Merged2linkedList.mergeTwoLists5(n1, n5);
         ListNode.printNode(listNode);*/
 
-        ListNode l5 = ListNode.mergeTwoLists(n1, n5);
-        ListNode.printNode(l5);
+    /*    ListNode l5 = ListNode.mergeTwoLists(n1, n5);
+        ListNode.printNode(l5);*/
     }
 
     static class ListNode {
@@ -36,6 +40,33 @@ public class Merged2linkedList {
         }
 
         public ListNode() {
+        }
+
+        public ListNode reverse(ListNode node) {
+            Stack<ListNode> stack = new Stack<>();
+            while (node != null) {
+                stack.push(node);
+                node = node.next;
+            }
+            ListNode result = stack.pop();
+
+            while (!stack.isEmpty()) {
+                result = stack.pop();
+            }
+            return result;
+        }
+
+        public ListNode reverseWithRecursion(ListNode node) {
+            return reverseRecursion(null, node);
+        }
+
+        private ListNode reverseRecursion(ListNode prev, ListNode current) {
+            if (current == null) {
+                return prev;
+            }
+            ListNode next = current.next;
+              current.next = prev;
+              return reverseRecursion(current, next);
         }
 
         public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -83,7 +114,7 @@ public class Merged2linkedList {
 
         public static void printNode(ListNode node1) {
             while (node1 != null) {
-                System.out.println(node1.value);
+                System.out.print(node1.value);
                 node1 = node1.next;
             }
         }
@@ -120,4 +151,18 @@ public class Merged2linkedList {
         }
         return head.next;
     }
+
+
+    private ListNode gen(List<Integer> list) {
+
+        ListNode listNode = new ListNode(0);
+        ListNode current = listNode;
+        for (int i = 0; i < list.size(); i++) {
+            current.next = new ListNode(list.get(i));
+            current = current.next;
+        }
+        return listNode.next;
+    }
+
+
 }
